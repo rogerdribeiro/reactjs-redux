@@ -12,5 +12,6 @@ export function* addFavorite(action) {
     description: data.description,
     url: data.html_url,
   };
+
   yield put(addFavoriteSuccess(repositoryData));
 }
