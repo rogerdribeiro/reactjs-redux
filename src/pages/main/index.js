@@ -1,10 +1,17 @@
 import React, { Component, Fragment } from 'react';
-
 // import { Container } from './styles';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as FavoriteActions from '../../store/actions/favorites';
 
-export default class Main extends Component {
+class Main extends Component {
   state = {
     repositoryInput: '',
+  };
+
+  handleAddRepository = (event) => {
+    event.preventDefault();
+    this.props.addFavorite();
   };
 
   render() {
@@ -16,17 +23,32 @@ export default class Main extends Component {
             value={this.state.repository}
             onChange={e => this.setState({ repositoryInput: e.target.value })}
           />
+          <button type="submit">Adicionar</button>
           <ul>
-            <li>
-              <p>
-                <strong>Facebook/react</strong>
-                (description alkdf lkdf akldjfklasdf aksldf ajlksdf )
-              </p>
-              <a href="url">Acessar</a>
-            </li>
+            {this.props.favorites.map(favorite => (
+              <li key={favorite.id}>
+                <strong>{favorite.name}</strong>
+                {' '}
+(
+                {favorite.description}
+)
+                <a href={favorite.url}>Acessar</a>
+              </li>
+            ))}
           </ul>
         </form>
       </Fragment>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  favorites: state.favorites,
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators(FavoriteActions, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Main);
