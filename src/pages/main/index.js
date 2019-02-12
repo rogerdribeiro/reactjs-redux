@@ -11,7 +11,7 @@ class Main extends Component {
 
   handleAddRepository = (event) => {
     event.preventDefault();
-    this.props.addFavorite();
+    this.props.addFavoriteRequest(this.state.repositoryInput);
   };
 
   render() {
@@ -28,7 +28,6 @@ class Main extends Component {
             {this.props.favorites.map(favorite => (
               <li key={favorite.id}>
                 <strong>{favorite.name}</strong>
-                {' '}
 (
                 {favorite.description}
 )
